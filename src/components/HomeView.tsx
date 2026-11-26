@@ -3,7 +3,6 @@ import { useCountdown } from '../hooks/useCountdown'
 import { useChurrascoStore } from '../store/useChurrascoStore'
 import { vib } from '../utils/vib'
 
-const RING_LENGTH = 276.46
 const COUNTDOWN_LABELS = ['dias', 'horas', 'min', 'seg']
 
 interface HomeViewProps {
@@ -51,29 +50,16 @@ export function HomeView({ onSeeAll }: HomeViewProps) {
       </div>
 
       <div className="row2">
-        <div className="ring-cell tilt">
-          <svg className="ring" viewBox="0 0 100 100" aria-label={`${percent}% das tarefas concluídas`}>
-            <defs>
-              <linearGradient id="g">
-                <stop offset="0" stopColor="#ff5a2c" />
-                <stop offset="1" stopColor="#ffc24a" />
-              </linearGradient>
-            </defs>
-            <circle
-              className="fg"
-              cx="50"
-              cy="50"
-              r="44"
-              transform="rotate(-90 50 50)"
-              style={{ strokeDashoffset: RING_LENGTH * (1 - percent / 100) }}
-            />
-            <text x="50" y="50">
-              {percent}%
-            </text>
-          </svg>
-          <span>
-            {done} de {total} tarefas
-          </span>
+        <div className="rate-cell tilt">
+          <div className="rate" aria-label={`${percent}% das tarefas concluídas`}>
+            <b>
+              {percent}
+              <i>%</i>
+            </b>
+            <span>
+              {done} de {total} tarefas
+            </span>
+          </div>
         </div>
         <div className="glass mini tilt" style={{ display: 'grid', alignContent: 'center' }}>
           <b>{confirmed}</b>
