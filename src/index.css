@@ -355,10 +355,9 @@ h2 .title-icon { font-size: 17px; line-height: 1 }
 @keyframes pk { from { transform: rotateY(100deg) scale(.7); opacity: 0; filter: brightness(3) } to { transform: none; opacity: 1; filter: none } }
 @keyframes fade { from { opacity: 0 } }
 @keyframes popc { 0% { filter: brightness(2.6) saturate(1.6); transform: scale(.93) } 50% { transform: scale(1.05) } 100% { filter: none; transform: none } }
-.ovr { position: absolute; left: 16%; top: 14px; line-height: 1; transform: translateZ(30px) }
-.ovr b { display: block; font-size: 26px; color: #000 }
-.ovr span { font-size: 10px; font-weight: 800 }
-.bd { position: absolute; right: 14%; top: 14px; font-size: 15px; transform: translateZ(30px) }
+.ovr { position: absolute; left: 16%; top: 22px; line-height: 1; transform: translateZ(30px) }
+.ovr b { display: block; font-size: 20px; color: #000 }
+.ovr span { font-size: 9px; font-weight: 800 }
 .av { align-self: center; font-size: 52px; margin-top: 34px; line-height: 1.1; transform: translateZ(50px) }
 .nm {
   font-weight: 800;

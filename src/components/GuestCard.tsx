@@ -28,7 +28,6 @@ export function GuestCard({ guest, index }: GuestCardProps) {
           <b>{guest.shirtNumber}</b>
           <span>Nº</span>
         </div>
-        <div className="bd">✅</div>
         <div className="av">{guest.emoji}</div>
         <div className="nm">{guest.name}</div>
         <div className="st">
