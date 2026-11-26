@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { EMOJIS } from '../data/seed'
+import { EMOJIS, STAT_LABELS } from '../data/seed'
 import { vib } from '../utils/vib'
 import { Sheet } from './Sheet'
 import type { Attribute, Guest } from '../types'
@@ -82,8 +82,8 @@ export function GuestSheet({
       overall: clamp(Number(overall) || 75),
       confirmed,
       brings: brings.trim().slice(0, 24) || '—',
-      stats: stats.map((stat) => ({
-        label: stat.label.trim().toUpperCase().slice(0, 8) || 'PONTOS',
+      stats: stats.map((stat, index) => ({
+        label: stat.label.trim().toUpperCase().slice(0, 8) || STAT_LABELS[index],
         value: clamp(Number(stat.value) || 70),
       })) as [Attribute, Attribute, Attribute],
     })
@@ -201,6 +201,7 @@ export function GuestSheet({
                 type="text"
                 aria-label={`Nome do atributo ${index + 1}`}
                 maxLength={8}
+                placeholder={STAT_LABELS[index]}
                 value={stat.label}
                 onChange={(event) => updateStat(index, { label: event.target.value })}
               />

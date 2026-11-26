@@ -3,15 +3,24 @@ import type { ChurrascoData, Guest, Task } from '../types'
 /** Valores de carta ficam na faixa FIFA (85–99). */
 export const boostStat = (value: number) => Math.min(99, Math.max(85, value + 5))
 
-/** Os três atributos fixos de cada convidado. */
+/** Rótulos padrão — podem ser editados pelo usuário. */
 export const STAT_LABELS = ['BEER', 'FOME', 'SOS'] as const
 
-/** Garante sempre os três atributos na ordem BEER, FOME, SOS. */
+/** Rótulos das versões antigas que voltam ao padrão. */
+const LEGACY_LABELS = new Set([
+  'FOGO', 'PAPO', 'TEMPERO', 'AMOR', 'PIADA', 'GELO', 'FORÇA', 'DOCE', 'PONTOS',
+])
+
+/** Mantém três atributos, preservando rótulos personalizados. */
 export function normalizeStats(stats: Guest['stats'] | undefined): Guest['stats'] {
-  return STAT_LABELS.map((label, index) => ({
-    label,
-    value: Number(stats?.[index]?.value ?? 70),
-  })) as Guest['stats']
+  return STAT_LABELS.map((label, index) => {
+    const stat = stats?.[index]
+    const current = String(stat?.label ?? '').trim().toUpperCase()
+    return {
+      label: current && !LEGACY_LABELS.has(current) ? current.slice(0, 8) : label,
+      value: Number(stat?.value ?? 70),
+    }
+  }) as Guest['stats']
 }
 
 export const EMOJIS = [
