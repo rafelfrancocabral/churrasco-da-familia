@@ -1,5 +1,8 @@
 import type { ChurrascoData, Guest, Task } from '../types'
 
+/** Valores de carta ficam na faixa FIFA (85–99). */
+export const boostStat = (value: number) => Math.min(99, Math.max(85, value + 5))
+
 export const EMOJIS = [
   '🧔', '👵', '🕶️', '👩', '🧒', '👧', '👨', '🧑‍🍳', '🤠', '😎',
   '🍺', '🇯🇵', '⚽', '🥸', '🍖', '🥩', '🧑‍⚕️',
@@ -111,7 +114,14 @@ function nextSundayAt13h(): string {
 
 export const seed: ChurrascoData = {
   tasks,
-  guests,
+  guests: guests.map((guest) => ({
+    ...guest,
+    overall: boostStat(guest.overall),
+    stats: guest.stats.map((stat) => ({
+      ...stat,
+      value: boostStat(stat.value),
+    })) as Guest['stats'],
+  })),
   when: nextSundayAt13h(),
   nextId: 100,
 }

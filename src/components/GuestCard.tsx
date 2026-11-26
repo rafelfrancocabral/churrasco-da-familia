@@ -64,11 +64,11 @@ export function GuestCard({ guest, index, onToggle }: GuestCardProps) {
         <div className="st">
           {guest.stats.map((stat) => (
             <span key={stat.label}>
-              <b>{stat.value}</b> {stat.label}
+              {stat.label} <b>{stat.value}</b>
             </span>
           ))}
         </div>
-        <div className="lv">Leva: {guest.brings}</div>
+        <div className="lv">Skill: {guest.brings}</div>
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { seed } from '../data/seed'
+import { boostStat, seed } from '../data/seed'
 import type { ChurrascoData, Guest } from '../types'
 
 interface ChurrascoStore extends ChurrascoData {
@@ -68,7 +68,7 @@ function loadInitialData(): ChurrascoData {
 }
 
 export const useChurrascoStore = create<ChurrascoStore>()(
-  persist(
+  persist<ChurrascoStore, [], [], ChurrascoData>(
     (set) => ({
       ...loadInitialData(),
 
@@ -137,6 +137,25 @@ export const useChurrascoStore = create<ChurrascoStore>()(
 
       clearTasks: () => set({ tasks: [] }),
     }),
-    { name: 'churrasco-da-familia-v1' },
+    {
+      name: 'churrasco-da-familia-v1',
+      version: 2,
+      migrate: (persisted, version) => {
+        const data = persisted as ChurrascoData
+        if (version >= 2 || !Array.isArray(data?.guests)) return data
+
+        return {
+          ...data,
+          guests: data.guests.map((guest) => ({
+            ...guest,
+            overall: boostStat(guest.overall),
+            stats: guest.stats.map((stat) => ({
+              ...stat,
+              value: boostStat(stat.value),
+            })) as Guest['stats'],
+          })),
+        }
+      },
+    },
   ),
 )

@@ -143,6 +143,8 @@ h1 span {
 .ring text { fill: var(--text); font-size: 22px; font-weight: 800; text-anchor: middle; dominant-baseline: central }
 h2 { font-size: 15px; margin: 18px 2px 10px; display: flex; justify-content: space-between; align-items: center }
 h2 em { font-style: normal; color: var(--muted); font-size: 12px; font-weight: 500 }
+h2 .heading { display: inline-flex; align-items: center; gap: 8px }
+h2 .title-icon { font-size: 17px; line-height: 1 }
 .link { color: var(--fire2); text-decoration: none; background: none; border: 0; font: inherit; padding: 0; cursor: pointer }
 
 /* Tarefas */
@@ -348,7 +350,7 @@ h2 em { font-style: normal; color: var(--muted); font-size: 12px; font-weight: 5
 @keyframes fade { from { opacity: 0 } }
 @keyframes popc { 0% { filter: brightness(2.6) saturate(1.6); transform: scale(.93) } 50% { transform: scale(1.05) } 100% { filter: none; transform: none } }
 .ovr { position: absolute; left: 16%; top: 14%; line-height: 1; transform: translateZ(30px) }
-.ovr b { display: block; font-size: 26px }
+.ovr b { display: block; font-size: 26px; color: #000 }
 .ovr span { font-size: 10px; font-weight: 800 }
 .bd { position: absolute; right: 14%; top: 14%; font-size: 15px; transform: translateZ(30px) }
 .av { font-size: 52px; margin-top: 22px; line-height: 1.1; transform: translateZ(50px) }
@@ -362,8 +364,9 @@ h2 em { font-style: normal; color: var(--muted); font-size: 12px; font-weight: 5
   margin: 2px 14% 4px;
   transform: translateZ(25px);
 }
-.st { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8px; font-size: 10px; font-weight: 700; margin: 0 16% }
-.lv { font-size: 10px; margin-top: 4px; font-weight: 600 }
+.st { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8px; font-size: 11px; font-weight: 700; margin: 0 16% }
+.st b { font-size: 12px; color: #000 }
+.lv { font-size: 11px; margin-top: 4px; font-weight: 600 }
 
 /* Navegação inferior */
 nav {

@@ -198,7 +198,7 @@ export function GuestSheet({
             </div>
           ))}
 
-          <label htmlFor="gs-brings">Leva</label>
+          <label htmlFor="gs-brings">Skill</label>
           <input
             id="gs-brings"
             type="text"

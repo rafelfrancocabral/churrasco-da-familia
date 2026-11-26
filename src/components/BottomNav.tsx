@@ -8,7 +8,7 @@ interface BottomNavProps {
 const TABS: Array<{ id: ViewId; icon: string; label: string }> = [
   { id: 'home', icon: '🏠', label: 'Início' },
   { id: 'tasks', icon: '✅', label: 'Tarefas' },
-  { id: 'guests', icon: '🃏', label: 'Escalação' },
+  { id: 'guests', icon: '👕', label: 'Escalação' },
 ]
 
 export function BottomNav({ active, onChange }: BottomNavProps) {

@@ -51,7 +51,12 @@ export function GuestsView() {
       </div>
 
       <h2 style={{ marginTop: 4 }}>
-        Escalação
+        <span className="heading">
+          <span className="title-icon" aria-hidden="true">
+            👕
+          </span>
+          Escalação
+        </span>
         <em>
           {confirmed} de {guests.length} confirmados
         </em>
