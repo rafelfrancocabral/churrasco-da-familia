@@ -56,7 +56,7 @@ export function GuestCard({ guest, index, onToggle }: GuestCardProps) {
       <div className="ct">
         <div className="ovr">
           <b>{guest.shirtNumber}</b>
-          <span>Nº CAMISA</span>
+          <span>Nº</span>
         </div>
         <div className="bd">{guest.confirmed ? '✅' : '⏳'}</div>
         <div className="av">{guest.emoji}</div>
