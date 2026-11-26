@@ -19,9 +19,9 @@ interface GuestSheetProps {
 const clamp = (value: number) => Math.min(99, Math.max(0, Math.round(value)))
 
 const NEW_STATS: Attribute[] = [
-  { label: 'FOGO', value: 90 },
+  { label: 'BEER', value: 90 },
   { label: 'FOME', value: 80 },
-  { label: 'PAPO', value: 70 },
+  { label: 'SOS', value: 70 },
 ]
 
 export function GuestSheet({

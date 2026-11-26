@@ -3,6 +3,17 @@ import type { ChurrascoData, Guest, Task } from '../types'
 /** Valores de carta ficam na faixa FIFA (85–99). */
 export const boostStat = (value: number) => Math.min(99, Math.max(85, value + 5))
 
+/** Os três atributos fixos de cada convidado. */
+export const STAT_LABELS = ['BEER', 'FOME', 'SOS'] as const
+
+/** Garante sempre os três atributos na ordem BEER, FOME, SOS. */
+export function normalizeStats(stats: Guest['stats'] | undefined): Guest['stats'] {
+  return STAT_LABELS.map((label, index) => ({
+    label,
+    value: Number(stats?.[index]?.value ?? 70),
+  })) as Guest['stats']
+}
+
 export const EMOJIS = [
   '🧔', '👵', '🕶️', '👩', '🧒', '👧', '👨', '🧑‍🍳', '🤠', '😎',
   '🍺', '🇯🇵', '⚽', '🥸', '🍖', '🥩', '🧑‍⚕️',
@@ -19,9 +30,9 @@ const guests: Guest[] = [
     confirmed: true,
     brings: 'Carnes',
     stats: [
-      { label: 'FOGO', value: 92 },
+      { label: 'BEER', value: 92 },
       { label: 'FOME', value: 88 },
-      { label: 'PAPO', value: 80 },
+      { label: 'SOS', value: 80 },
     ],
   },
   {
@@ -34,9 +45,9 @@ const guests: Guest[] = [
     confirmed: true,
     brings: 'Farofa',
     stats: [
-      { label: 'TEMPERO', value: 99 },
-      { label: 'AMOR', value: 99 },
-      { label: 'FOME', value: 70 },
+      { label: 'BEER', value: 99 },
+      { label: 'FOME', value: 99 },
+      { label: 'SOS', value: 70 },
     ],
   },
   {
@@ -49,9 +60,9 @@ const guests: Guest[] = [
     confirmed: true,
     brings: 'Carvão',
     stats: [
-      { label: 'FOGO', value: 75 },
-      { label: 'PIADA', value: 95 },
-      { label: 'FOME', value: 90 },
+      { label: 'BEER', value: 75 },
+      { label: 'FOME', value: 95 },
+      { label: 'SOS', value: 90 },
     ],
   },
   {
@@ -64,9 +75,9 @@ const guests: Guest[] = [
     confirmed: false,
     brings: 'Bebidas',
     stats: [
-      { label: 'GELO', value: 85 },
-      { label: 'PAPO', value: 90 },
-      { label: 'FOME', value: 65 },
+      { label: 'BEER', value: 85 },
+      { label: 'FOME', value: 90 },
+      { label: 'SOS', value: 65 },
     ],
   },
   {
@@ -79,9 +90,9 @@ const guests: Guest[] = [
     confirmed: true,
     brings: 'Mesas',
     stats: [
-      { label: 'FORÇA', value: 72 },
+      { label: 'BEER', value: 72 },
       { label: 'FOME', value: 96 },
-      { label: 'PAPO', value: 60 },
+      { label: 'SOS', value: 60 },
     ],
   },
   {
@@ -94,9 +105,9 @@ const guests: Guest[] = [
     confirmed: false,
     brings: 'Sobremesa',
     stats: [
-      { label: 'DOCE', value: 94 },
+      { label: 'BEER', value: 94 },
       { label: 'FOME', value: 80 },
-      { label: 'PAPO', value: 78 },
+      { label: 'SOS', value: 78 },
     ],
   },
 ]
@@ -123,7 +134,7 @@ export const seed: ChurrascoData = {
   guests: guests.map((guest) => ({
     ...guest,
     overall: boostStat(guest.overall),
-    stats: guest.stats.map((stat) => ({
+    stats: normalizeStats(guest.stats).map((stat) => ({
       ...stat,
       value: boostStat(stat.value),
     })) as Guest['stats'],

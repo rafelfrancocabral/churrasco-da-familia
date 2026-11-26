@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase'
 import type { ChurrascoData } from '../types'
-import { pickData, useChurrascoStore } from './useChurrascoStore'
+import { normalizeData, pickData, useChurrascoStore } from './useChurrascoStore'
 
 const ROW_ID = 1
 const DEBOUNCE_MS = 300
@@ -39,18 +39,25 @@ export function startSupabaseSync(): () => void {
     pushTimer = window.setTimeout(() => void push(), DEBOUNCE_MS)
   }
 
-  const applyRemote = (data: ChurrascoData, updatedAt: string) => {
+  const applyRemote = (
+    raw: ChurrascoData,
+    updatedAt: string,
+    forcePush = false,
+  ) => {
     const time = Date.parse(updatedAt)
     if (!Number.isFinite(time) || time <= lastRemoteAt) return
     lastRemoteAt = time
 
+    const data = normalizeData(raw)
     const json = JSON.stringify(data)
-    if (json === lastPushed) return
+    if (json === lastPushed && !forcePush) return
 
     applyingRemote = true
     useChurrascoStore.setState(data)
     lastPushed = json
     applyingRemote = false
+
+    if (forcePush) void push(true)
   }
 
   const unsubscribe = useChurrascoStore.subscribe((state) => {
@@ -91,7 +98,11 @@ export function startSupabaseSync(): () => void {
         void push(true)
         return
       }
-      applyRemote(data.data as ChurrascoData, data.updated_at)
+
+      const remote = data.data as ChurrascoData
+      const needsNormalize =
+        JSON.stringify(normalizeData(remote)) !== JSON.stringify(remote)
+      applyRemote(remote, data.updated_at, needsNormalize)
     })
 
   return () => {

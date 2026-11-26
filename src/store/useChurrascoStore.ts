@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { boostStat, seed } from '../data/seed'
+import { boostStat, normalizeStats, seed } from '../data/seed'
 import type { ChurrascoData, Guest } from '../types'
 
 interface ChurrascoStore extends ChurrascoData {
@@ -24,6 +24,20 @@ export function pickData(state: ChurrascoData): ChurrascoData {
     guests: state.guests,
     when: state.when,
     nextId: state.nextId,
+  }
+}
+
+/** Aplica o formato atual a dados vindos do storage ou do Supabase. */
+export function normalizeData(data: ChurrascoData): ChurrascoData {
+  if (!Array.isArray(data?.guests)) return data
+
+  return {
+    ...data,
+    guests: data.guests.map((guest, index) => ({
+      ...guest,
+      shirtNumber: guest.shirtNumber ?? index + 1,
+      stats: normalizeStats(guest.stats),
+    })),
   }
 }
 
@@ -140,26 +154,28 @@ export const useChurrascoStore = create<ChurrascoStore>()(
     }),
     {
       name: 'churrasco-da-familia-v1',
-      version: 3,
+      version: 4,
       migrate: (persisted, version) => {
         const data = persisted as ChurrascoData
         if (!Array.isArray(data?.guests)) return data
 
-        return {
+        const boosted: ChurrascoData = {
           ...data,
-          guests: data.guests.map((guest, index) => ({
-            ...guest,
-            overall: version < 2 ? boostStat(guest.overall) : guest.overall,
-            shirtNumber: guest.shirtNumber ?? index + 1,
-            stats:
-              version < 2
-                ? (guest.stats.map((stat) => ({
+          guests: data.guests.map((guest) =>
+            version < 2
+              ? {
+                  ...guest,
+                  overall: boostStat(guest.overall),
+                  stats: guest.stats.map((stat) => ({
                     ...stat,
                     value: boostStat(stat.value),
-                  })) as Guest['stats'])
-                : guest.stats,
-          })),
+                  })) as Guest['stats'],
+                }
+              : guest,
+          ),
         }
+
+        return normalizeData(boosted)
       },
     },
   ),
