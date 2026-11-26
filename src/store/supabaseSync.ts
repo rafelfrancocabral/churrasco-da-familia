@@ -18,10 +18,10 @@ export function startSupabaseSync(): () => void {
   let applyingRemote = false
   let pushTimer: number | undefined
 
-  const push = async () => {
+  const push = async (force = false) => {
     const data = pickData(useChurrascoStore.getState())
     const json = JSON.stringify(data)
-    if (json === lastPushed) return
+    if (!force && json === lastPushed) return
 
     lastPushed = json
     const { error } = await client
@@ -88,7 +88,7 @@ export function startSupabaseSync(): () => void {
         return
       }
       if (!data) {
-        void push()
+        void push(true)
         return
       }
       applyRemote(data.data as ChurrascoData, data.updated_at)
