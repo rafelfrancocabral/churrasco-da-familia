@@ -46,3 +46,20 @@ npm run dev      # http://localhost:5173
 npm run build
 npm run preview
 ```
+
+## Sincronização entre dispositivos (Supabase)
+
+O app continua funcionando só com `localStorage` se as variáveis abaixo não existirem.
+Para PC e mobile compartilharem os mesmos dados:
+
+1. Execute `supabase/schema.sql` no **SQL Editor** do seu projeto Supabase.
+2. Em **Project Settings → API**, copie a **Project URL** e a **anon key**.
+3. Defina as variáveis no Vercel (**Project → Settings → Environment Variables**):
+
+```bash
+VITE_SUPABASE_URL=https://SEU-PROJ.supabase.co
+VITE_SUPABASE_ANON_KEY=sua-anon-key
+```
+
+4. Faça um novo deploy. O estado passa a ser salvo numa linha única e sincronizado
+   via Realtime; a última alteração vale para todos os dispositivos (last-write-wins).
