@@ -331,7 +331,15 @@ h2 .title-icon { font-size: 17px; line-height: 1 }
   transition: opacity .3s;
   mix-blend-mode: soft-light;
 }
-.ct { position: absolute; inset: 0; padding: 10px; transform-style: preserve-3d; pointer-events: none }
+.ct {
+  position: absolute;
+  inset: 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
 .sp {
   position: absolute;
   font-size: 13px;
@@ -356,7 +364,7 @@ h2 .title-icon { font-size: 17px; line-height: 1 }
 .ovr b { display: block; font-size: 26px; color: #000 }
 .ovr span { font-size: 10px; font-weight: 800 }
 .bd { position: absolute; right: 14%; top: 14%; font-size: 15px; transform: translateZ(30px) }
-.av { font-size: 52px; margin-top: 22px; line-height: 1.1; transform: translateZ(50px) }
+.av { align-self: center; font-size: 52px; margin-top: 34px; line-height: 1.1; transform: translateZ(50px) }
 .nm {
   font-weight: 800;
   font-size: 14px;
@@ -364,17 +372,36 @@ h2 .title-icon { font-size: 17px; line-height: 1 }
   text-transform: uppercase;
   border-bottom: 1px solid rgba(0,0,0,.25);
   padding-bottom: 3px;
-  margin: 2px 14% 4px;
+  margin: 4px 14% 6px;
   transform: translateZ(25px);
 }
-.st { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8px; font-size: 11px; font-weight: 700; margin: 0 16% }
-.st b { font-size: 12px; color: #000 }
+.st {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: center;
+  gap: 6px;
+  margin: 0 12%;
+  font-size: 13px;
+  font-weight: 800;
+  transform: translateZ(22px);
+}
+.st span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 7px;
+  border-radius: 8px;
+  background: rgba(0,0,0,.09);
+  border: 1px solid rgba(0,0,0,.08);
+}
+.st b { font-size: 18px; color: #000; font-variant-numeric: tabular-nums }
+.cw.out .st span { background: rgba(255,255,255,.3); border-color: rgba(0,0,0,.08) }
 .lv {
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  bottom: 8%;
-  margin: 0;
+  width: 80%;
+  align-self: center;
+  flex: none;
+  margin: 6px 0;
   padding: 5px 6px;
   border-radius: 10px;
   background: linear-gradient(180deg, rgba(20,14,4,.78), rgba(0,0,0,.55));
