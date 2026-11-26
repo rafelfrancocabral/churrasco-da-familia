@@ -1,9 +1,28 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { GuestCard } from './GuestCard'
 import { GuestSheet, type GuestSheetState } from './GuestSheet'
 import { useChurrascoStore } from '../store/useChurrascoStore'
 import { useToastStore } from '../store/useToastStore'
 import { vib } from '../utils/vib'
+
+/** Sorteio fixo por carregamento da página (troca apenas no refresh). */
+const SHUFFLE_SEED = Math.random()
+
+/** Embaralha com semente estável: a ordem não muda ao editar/confirmar cards. */
+function shuffle<T>(items: T[], seed: number): T[] {
+  const result = [...items]
+  let state = Math.floor(seed * 2 ** 31) || 1
+  const random = () => {
+    state = (state * 1664525 + 1013904223) % 2 ** 32
+    return state / 2 ** 32
+  }
+
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1))
+    ;[result[i], result[j]] = [result[j], result[i]]
+  }
+  return result
+}
 
 export function GuestsView() {
   const guests = useChurrascoStore((state) => state.guests)
@@ -15,6 +34,7 @@ export function GuestsView() {
 
   const [sheet, setSheet] = useState<GuestSheetState | null>(null)
   const confirmed = guests.filter((guest) => guest.confirmed).length
+  const orderedGuests = useMemo(() => shuffle(guests, SHUFFLE_SEED), [guests])
 
   const deleteGuest = () => {
     if (sheet?.kind !== 'edit') return
@@ -62,7 +82,7 @@ export function GuestsView() {
         </em>
       </h2>
       <div className="grid" id="guests">
-        {guests.map((guest, index) => (
+        {orderedGuests.map((guest, index) => (
           <GuestCard
             key={guest.id}
             guest={guest}
