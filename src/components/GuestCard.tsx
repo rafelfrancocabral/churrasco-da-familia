@@ -68,7 +68,9 @@ export function GuestCard({ guest, index, onToggle }: GuestCardProps) {
             </span>
           ))}
         </div>
-        <div className="lv">Skill: {guest.brings}</div>
+        <div className="lv">
+          <span>Skill:</span> {guest.brings}
+        </div>
       </div>
     </div>
   )
