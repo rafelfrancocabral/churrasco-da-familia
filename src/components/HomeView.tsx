@@ -59,7 +59,6 @@ export function HomeView({ onSeeAll }: HomeViewProps) {
                 <stop offset="1" stopColor="#ffc24a" />
               </linearGradient>
             </defs>
-            <circle className="bg" cx="50" cy="50" r="44" />
             <circle
               className="fg"
               cx="50"
