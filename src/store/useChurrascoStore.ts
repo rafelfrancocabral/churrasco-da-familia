@@ -46,11 +46,12 @@ function loadInitialData(): ChurrascoData {
         workerId: Number(task.w ?? 0),
         done: Boolean(task.d),
       })),
-      guests: old.guests.map((guest: Record<string, unknown>) => ({
+      guests: old.guests.map((guest: Record<string, unknown>, index: number) => ({
         id: Number(guest.id),
         name: String(guest.n ?? ''),
         emoji: String(guest.e ?? '🧑'),
         position: String(guest.p ?? 'NOVO'),
+        shirtNumber: Number(guest.num ?? index + 1),
         overall: Number(guest.o ?? 75),
         confirmed: Boolean(guest.a),
         brings: String(guest.l ?? '—'),
@@ -139,20 +140,24 @@ export const useChurrascoStore = create<ChurrascoStore>()(
     }),
     {
       name: 'churrasco-da-familia-v1',
-      version: 2,
+      version: 3,
       migrate: (persisted, version) => {
         const data = persisted as ChurrascoData
-        if (version >= 2 || !Array.isArray(data?.guests)) return data
+        if (!Array.isArray(data?.guests)) return data
 
         return {
           ...data,
-          guests: data.guests.map((guest) => ({
+          guests: data.guests.map((guest, index) => ({
             ...guest,
-            overall: boostStat(guest.overall),
-            stats: guest.stats.map((stat) => ({
-              ...stat,
-              value: boostStat(stat.value),
-            })) as Guest['stats'],
+            overall: version < 2 ? boostStat(guest.overall) : guest.overall,
+            shirtNumber: guest.shirtNumber ?? index + 1,
+            stats:
+              version < 2
+                ? (guest.stats.map((stat) => ({
+                    ...stat,
+                    value: boostStat(stat.value),
+                  })) as Guest['stats'])
+                : guest.stats,
           })),
         }
       },

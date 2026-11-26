@@ -38,6 +38,9 @@ export function GuestSheet({
   const [name, setName] = useState(existing?.name ?? '')
   const [emoji, setEmoji] = useState(existing?.emoji ?? '🧑')
   const [position, setPosition] = useState(existing?.position ?? 'NOVO')
+  const [shirtNumber, setShirtNumber] = useState(
+    String(existing?.shirtNumber ?? guests.length + 1),
+  )
   const [overall, setOverall] = useState(String(existing?.overall ?? 75))
   const [brings, setBrings] = useState(existing?.brings ?? '')
   const [confirmed, setConfirmed] = useState(existing?.confirmed ?? true)
@@ -72,6 +75,7 @@ export function GuestSheet({
       name: name.trim().slice(0, 12),
       emoji: emoji.trim().slice(0, 8) || '🧑',
       position: position.trim().toUpperCase().slice(0, 5) || 'NOVO',
+      shirtNumber: Math.min(99, Math.max(1, Math.round(Number(shirtNumber) || guests.length + 1))),
       overall: clamp(Number(overall) || 75),
       confirmed,
       brings: brings.trim().slice(0, 24) || '—',
@@ -102,7 +106,7 @@ export function GuestSheet({
                   onPick?.(guest.id)
                 }}
               >
-                {guest.emoji} {guest.name} — {guest.overall}
+                {guest.emoji} {guest.name} — camisa {guest.shirtNumber}
               </button>
             ))}
           </div>
@@ -127,6 +131,16 @@ export function GuestSheet({
               setName(event.target.value)
               if (event.target.value.trim()) setInvalidName(false)
             }}
+          />
+
+          <label htmlFor="gs-number">Número da camisa</label>
+          <input
+            id="gs-number"
+            type="number"
+            min={1}
+            max={99}
+            value={shirtNumber}
+            onChange={(event) => setShirtNumber(event.target.value)}
           />
 
           <label htmlFor="gs-emoji">Emoji</label>

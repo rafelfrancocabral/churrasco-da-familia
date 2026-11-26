@@ -41,7 +41,7 @@ export function GuestCard({ guest, index, onToggle }: GuestCardProps) {
       role="button"
       tabIndex={0}
       aria-pressed={guest.confirmed}
-      aria-label={`${guest.name}, nota ${guest.overall}, ${guest.confirmed ? 'confirmado' : 'pendente'}`}
+      aria-label={`${guest.name}, camisa ${guest.shirtNumber}, ${guest.confirmed ? 'confirmado' : 'pendente'}`}
       onClick={toggle}
       onKeyDown={onKeyDown}
     >
@@ -55,8 +55,8 @@ export function GuestCard({ guest, index, onToggle }: GuestCardProps) {
       </div>
       <div className="ct">
         <div className="ovr">
-          <b>{guest.overall}</b>
-          <span>{guest.position}</span>
+          <b>{guest.shirtNumber}</b>
+          <span>Nº CAMISA</span>
         </div>
         <div className="bd">{guest.confirmed ? '✅' : '⏳'}</div>
         <div className="av">{guest.emoji}</div>

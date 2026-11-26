@@ -29,6 +29,7 @@ PWA mobile-first para organizar o churrasco. Layout e efeitos visuais portados d
 - Bottom sheets com validação, seleção de responsáveis e criação de pessoa dentro da tarefa
 - Teclado mobile: sheet limitado à área visível e campo focado sempre trazido para dentro da tela
 - Seletor de emojis ampliado (🍺 🇯🇵 ⚽ 🥸 🍖 🥩 🧑‍⚕️)
+- Número da camisa no topo do card (substituiu nota/posição) e editável no sheet
 - Brilho retangular do anel de progresso removido (mantido o tilt 3D)
 
 ### Extra a pedido

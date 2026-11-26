@@ -9,6 +9,7 @@ export interface Guest {
   emoji: string
   position: string
   overall: number
+  shirtNumber: number
   confirmed: boolean
   brings: string
   stats: [Attribute, Attribute, Attribute]
