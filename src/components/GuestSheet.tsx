@@ -47,7 +47,10 @@ export function GuestSheet({
   const [invalidName, setInvalidName] = useState(false)
 
   useEffect(() => {
-    const timer = window.setTimeout(() => nameRef.current?.focus(), 280)
+    const timer = window.setTimeout(
+      () => nameRef.current?.focus({ preventScroll: true }),
+      420,
+    )
     return () => window.clearTimeout(timer)
   }, [])
 

@@ -1,6 +1,9 @@
 import type { ChurrascoData, Guest, Task } from '../types'
 
-export const EMOJIS = ['🧔', '👵', '🕶️', '👩', '🧒', '👧', '👨', '🧑‍🍳', '🤠', '😎']
+export const EMOJIS = [
+  '🧔', '👵', '🕶️', '👩', '🧒', '👧', '👨', '🧑‍🍳', '🤠', '😎',
+  '🍺', '🇯🇵', '⚽', '🥸', '🍖', '🥩', '🧑‍⚕️',
+]
 
 const guests: Guest[] = [
   {

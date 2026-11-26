@@ -24,7 +24,10 @@ export function TaskSheet({ task, onClose, onSave, onDelete }: TaskSheetProps) {
   const titleRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    const timer = window.setTimeout(() => titleRef.current?.focus(), 280)
+    const timer = window.setTimeout(
+      () => titleRef.current?.focus({ preventScroll: true }),
+      420,
+    )
     return () => window.clearTimeout(timer)
   }, [])
 

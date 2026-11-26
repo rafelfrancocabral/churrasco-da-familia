@@ -27,6 +27,8 @@ PWA mobile-first para organizar o churrasco. Layout e efeitos visuais portados d
 - Toast com **Desfazer** por 4,5s (snapshot do estado antes da ação destrutiva)
 - Convidados: criar, editar, excluir e tocar na carta para confirmar/tirar presença
 - Bottom sheets com validação, seleção de responsáveis e criação de pessoa dentro da tarefa
+- Teclado mobile: sheet limitado à área visível e campo focado sempre trazido para dentro da tela
+- Seletor de emojis ampliado (🍺 🇯🇵 ⚽ 🥸 🍖 🥩 🧑‍⚕️)
 - Brilho retangular do anel de progresso removido (mantido o tilt 3D)
 
 ### Extra a pedido
