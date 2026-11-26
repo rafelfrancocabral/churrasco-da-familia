@@ -7,7 +7,6 @@ interface ChurrascoStore extends ChurrascoData {
   setWhen: (when: string) => void
   saveGuest: (guest: Guest) => void
   removeGuest: (id: number) => void
-  toggleGuest: (id: number) => void
   addTask: (title: string, workerId: number) => void
   updateTask: (id: number, title: string, workerId: number) => void
   removeTask: (id: number) => void
@@ -35,6 +34,7 @@ export function normalizeData(data: ChurrascoData): ChurrascoData {
     ...data,
     guests: data.guests.map((guest, index) => ({
       ...guest,
+      confirmed: true,
       shirtNumber: guest.shirtNumber ?? index + 1,
       stats: normalizeStats(guest.stats),
     })),
@@ -53,7 +53,7 @@ function loadInitialData(): ChurrascoData {
     const old = JSON.parse(raw)
     if (!Array.isArray(old?.tasks) || !Array.isArray(old?.guests)) return seed
 
-    return {
+    return normalizeData({
       tasks: old.tasks.map((task: Record<string, string | number | boolean>) => ({
         id: Number(task.id),
         title: String(task.t ?? ''),
@@ -76,7 +76,7 @@ function loadInitialData(): ChurrascoData {
       })),
       when: String(old.when ?? seed.when),
       nextId: Number(old.nid ?? seed.nextId),
-    }
+    })
   } catch {
     return seed
   }
@@ -94,8 +94,10 @@ export const useChurrascoStore = create<ChurrascoStore>()(
           const exists = state.guests.some((item) => item.id === guest.id)
           return {
             guests: exists
-              ? state.guests.map((item) => (item.id === guest.id ? guest : item))
-              : [...state.guests, guest],
+              ? state.guests.map((item) =>
+                  item.id === guest.id ? { ...guest, confirmed: true } : item,
+                )
+              : [...state.guests, { ...guest, confirmed: true }],
             nextId: exists ? state.nextId : state.nextId + 1,
           }
         }),
@@ -106,13 +108,6 @@ export const useChurrascoStore = create<ChurrascoStore>()(
           // Tarefas órfãs voltam para "Ninguém".
           tasks: state.tasks.map((task) =>
             task.workerId === id ? { ...task, workerId: 0 } : task,
-          ),
-        })),
-
-      toggleGuest: (id) =>
-        set((state) => ({
-          guests: state.guests.map((guest) =>
-            guest.id === id ? { ...guest, confirmed: !guest.confirmed } : guest,
           ),
         })),
 
@@ -154,7 +149,7 @@ export const useChurrascoStore = create<ChurrascoStore>()(
     }),
     {
       name: 'churrasco-da-familia-v1',
-      version: 4,
+      version: 5,
       migrate: (persisted, version) => {
         const data = persisted as ChurrascoData
         if (!Array.isArray(data?.guests)) return data

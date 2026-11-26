@@ -46,7 +46,6 @@ export function GuestSheet({
   )
   const [overall, setOverall] = useState(String(existing?.overall ?? 75))
   const [brings, setBrings] = useState(existing?.brings ?? '')
-  const [confirmed, setConfirmed] = useState(existing?.confirmed ?? true)
   const [stats, setStats] = useState<StatDraft[]>(
     existing ? existing.stats.map((stat) => ({ ...stat })) : NEW_STATS.map((stat) => ({ ...stat })),
   )
@@ -80,7 +79,7 @@ export function GuestSheet({
       position: position.trim().toUpperCase().slice(0, 5) || 'NOVO',
       shirtNumber: Math.min(99, Math.max(1, Math.round(Number(shirtNumber) || guests.length + 1))),
       overall: clamp(Number(overall) || 75),
-      confirmed,
+      confirmed: true,
       brings: brings.trim().slice(0, 24) || '—',
       stats: stats.map((stat, index) => ({
         label: stat.label.trim().toUpperCase().slice(0, 8) || STAT_LABELS[index],
@@ -228,18 +227,6 @@ export function GuestSheet({
             value={brings}
             onChange={(event) => setBrings(event.target.value)}
           />
-
-          <label>Presença</label>
-          <button
-            type="button"
-            className={`chip${confirmed ? ' on' : ''}`}
-            onClick={() => {
-              setConfirmed((value) => !value)
-              vib()
-            }}
-          >
-            {confirmed ? '✅ Confirmado' : '⏳ Pendente'}
-          </button>
 
           <div className="bar">
             {state.kind === 'edit' && onDelete && (

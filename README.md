@@ -9,8 +9,8 @@ PWA mobile-first para organizar o churrasco. Layout e efeitos visuais portados d
 - Vite + React + TypeScript + Tailwind CSS 4
 - Layout das 3 abas (Início, Tarefas, Escalação) com dados de seed
 - CSS puro: glassmorphism, botões físicos, brilhos de brasa, tilt 3D por ponteiro,
-  cartas douradas (confirmadas) e prateadas (pendentes), holográfico, raios, brilho
-  e abertura de pacote. Variantes ICON/RARE por nota ficam suspensas a pedido.
+  cartas sempre douradas (todos confirmados), holográfico, raios, brilho
+  e abertura de pacote. Variantes ICON/RARE e prateadas ficam suspensas a pedido.
 - Logo em `public/logo.png` (PNG com fundo transparente, gerado a partir do `logo.jpeg`)
 - `viewport-fit=cover`, safe areas, alvos de toque ≥ 44px, `prefers-reduced-motion`
 - Texto do usuário renderizado via React (escape automático de HTML)
@@ -25,7 +25,7 @@ PWA mobile-first para organizar o churrasco. Layout e efeitos visuais portados d
 - Tarefas: criar, editar, excluir, concluir/reabrir, filtros por status e responsável
 - Limpar tarefas: remover concluídas, desmarcar todas, apagar todas
 - Toast com **Desfazer** por 4,5s (snapshot do estado antes da ação destrutiva)
-- Convidados: criar, editar, excluir e tocar na carta para confirmar/tirar presença
+- Convidados: criar, editar e excluir; presença sempre confirmada (sem opção de tirar)
 - Bottom sheets com validação, seleção de responsáveis e criação de pessoa dentro da tarefa
 - Teclado mobile: sheet limitado à área visível e campo focado sempre trazido para dentro da tela
 - Seletor de emojis ampliado (🍺 🇯🇵 ⚽ 🥸 🍖 🥩 🧑‍⚕️)

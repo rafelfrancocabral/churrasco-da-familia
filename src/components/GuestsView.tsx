@@ -29,11 +29,10 @@ export function GuestsView() {
   const nextId = useChurrascoStore((state) => state.nextId)
   const saveGuest = useChurrascoStore((state) => state.saveGuest)
   const removeGuest = useChurrascoStore((state) => state.removeGuest)
-  const toggleGuest = useChurrascoStore((state) => state.toggleGuest)
   const showToast = useToastStore((state) => state.show)
 
   const [sheet, setSheet] = useState<GuestSheetState | null>(null)
-  const confirmed = guests.filter((guest) => guest.confirmed).length
+  const confirmed = guests.length
   const orderedGuests = useMemo(() => shuffle(guests, SHUFFLE_SEED), [guests])
 
   const deleteGuest = () => {
@@ -83,16 +82,11 @@ export function GuestsView() {
       </h2>
       <div className="grid" id="guests">
         {orderedGuests.map((guest, index) => (
-          <GuestCard
-            key={guest.id}
-            guest={guest}
-            index={index}
-            onToggle={() => toggleGuest(guest.id)}
-          />
+          <GuestCard key={guest.id} guest={guest} index={index} />
         ))}
       </div>
       <div className="empty" style={{ padding: 14 }}>
-        Toque na carta para confirmar ou tirar a presença
+        Todos os convidados confirmados — use ✎ Editar para ajustar os dados
       </div>
 
       {sheet && (

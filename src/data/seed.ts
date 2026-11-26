@@ -81,7 +81,7 @@ const guests: Guest[] = [
     position: 'MEIA',
     shirtNumber: 8,
     overall: 78,
-    confirmed: false,
+    confirmed: true,
     brings: 'Bebidas',
     stats: [
       { label: 'BEER', value: 85 },
@@ -111,7 +111,7 @@ const guests: Guest[] = [
     position: 'PAST',
     shirtNumber: 1,
     overall: 84,
-    confirmed: false,
+    confirmed: true,
     brings: 'Sobremesa',
     stats: [
       { label: 'BEER', value: 94 },

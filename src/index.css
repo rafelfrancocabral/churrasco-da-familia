@@ -256,8 +256,8 @@ h2 .title-icon { font-size: 17px; line-height: 1 }
 /* Escalação — cartas estilo FIFA Ultimate Team */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px }
 .cw {
-  aspect-ratio: 3/4.1;
-  cursor: pointer;
+  /* A altura é definida pelo conteúdo interno: nada fica cortado no mobile. */
+  min-width: 0;
   text-align: center;
   color: #3b2a08;
   --shield: polygon(50% 0, 100% 7%, 100% 88%, 50% 100%, 0 88%, 0 7%);
@@ -277,10 +277,6 @@ h2 .title-icon { font-size: 17px; line-height: 1 }
 .cw.tilt::after { display: none }
 .cw.rare { --bg: linear-gradient(160deg, #fff1a8, #f2b72e 45%, #c27d0e 75%, #f7d56a); --ho: .3; --glow: rgba(255,160,30,.75) }
 .cw.icon { --bg: linear-gradient(160deg, #fff, #d6ecfa 35%, #e8dcff 65%, #c4e8ff); --ho: .55; --glow: rgba(120,200,255,.8); color: #12284a }
-.cw.out { --bg: linear-gradient(160deg, #cfcfd6, #6f6f78); --ho: 0; color: #222 }
-.cw.out::before, .cw.out .holo, .cw.out .shine, .cw.out .rays { display: none }
-.cw.out .card { opacity: .6 }
-.cw.out .ct { opacity: .75 }
 .card {
   position: absolute;
   inset: 0;
@@ -332,8 +328,7 @@ h2 .title-icon { font-size: 17px; line-height: 1 }
   mix-blend-mode: soft-light;
 }
 .ct {
-  position: absolute;
-  inset: 0;
+  position: relative;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -360,10 +355,10 @@ h2 .title-icon { font-size: 17px; line-height: 1 }
 @keyframes pk { from { transform: rotateY(100deg) scale(.7); opacity: 0; filter: brightness(3) } to { transform: none; opacity: 1; filter: none } }
 @keyframes fade { from { opacity: 0 } }
 @keyframes popc { 0% { filter: brightness(2.6) saturate(1.6); transform: scale(.93) } 50% { transform: scale(1.05) } 100% { filter: none; transform: none } }
-.ovr { position: absolute; left: 16%; top: 14%; line-height: 1; transform: translateZ(30px) }
+.ovr { position: absolute; left: 16%; top: 14px; line-height: 1; transform: translateZ(30px) }
 .ovr b { display: block; font-size: 26px; color: #000 }
 .ovr span { font-size: 10px; font-weight: 800 }
-.bd { position: absolute; right: 14%; top: 14%; font-size: 15px; transform: translateZ(30px) }
+.bd { position: absolute; right: 14%; top: 14px; font-size: 15px; transform: translateZ(30px) }
 .av { align-self: center; font-size: 52px; margin-top: 34px; line-height: 1.1; transform: translateZ(50px) }
 .nm {
   font-weight: 800;
@@ -396,7 +391,6 @@ h2 .title-icon { font-size: 17px; line-height: 1 }
   border: 1px solid rgba(0,0,0,.08);
 }
 .st b { font-size: 18px; color: #000; font-variant-numeric: tabular-nums }
-.cw.out .st span { background: rgba(255,255,255,.3); border-color: rgba(0,0,0,.08) }
 .lv {
   width: 86%;
   align-self: center;
@@ -419,14 +413,6 @@ h2 .title-icon { font-size: 17px; line-height: 1 }
   transform: translateZ(35px);
 }
 .lv span { color: #ffd76a; font-weight: 900 }
-.cw.out .lv {
-  background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(205,205,212,.72));
-  border-color: rgba(0,0,0,.25);
-  box-shadow: 0 2px 6px rgba(0,0,0,.25);
-  color: #111;
-  text-shadow: none;
-}
-.cw.out .lv span { color: #6b4b00 }
 
 /* Navegação inferior */
 nav {
