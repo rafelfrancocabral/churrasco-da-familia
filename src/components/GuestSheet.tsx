@@ -18,6 +18,9 @@ interface GuestSheetProps {
 
 const clamp = (value: number) => Math.min(99, Math.max(0, Math.round(value)))
 
+/** Durante a edição o valor pode ficar vazio para o usuário digitar de novo. */
+type StatDraft = { label: string; value: number | '' }
+
 const NEW_STATS: Attribute[] = [
   { label: 'BEER', value: 90 },
   { label: 'FOME', value: 80 },
@@ -44,7 +47,7 @@ export function GuestSheet({
   const [overall, setOverall] = useState(String(existing?.overall ?? 75))
   const [brings, setBrings] = useState(existing?.brings ?? '')
   const [confirmed, setConfirmed] = useState(existing?.confirmed ?? true)
-  const [stats, setStats] = useState<Attribute[]>(
+  const [stats, setStats] = useState<StatDraft[]>(
     existing ? existing.stats.map((stat) => ({ ...stat })) : NEW_STATS.map((stat) => ({ ...stat })),
   )
   const [invalidName, setInvalidName] = useState(false)
@@ -57,7 +60,7 @@ export function GuestSheet({
     return () => window.clearTimeout(timer)
   }, [])
 
-  const updateStat = (index: number, patch: Partial<Attribute>) =>
+  const updateStat = (index: number, patch: Partial<StatDraft>) =>
     setStats((current) =>
       current.map((stat, i) => (i === index ? { ...stat, ...patch } : stat)),
     )
@@ -207,7 +210,10 @@ export function GuestSheet({
                 min={0}
                 max={99}
                 value={stat.value}
-                onChange={(event) => updateStat(index, { value: event.target.valueAsNumber || 0 })}
+                onChange={(event) => {
+                  const value = event.target.valueAsNumber
+                  updateStat(index, { value: Number.isFinite(value) ? value : '' })
+                }}
               />
             </div>
           ))}
